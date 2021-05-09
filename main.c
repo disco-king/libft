@@ -1,16 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "libft.h"
 
 
-typedef struct  s_list
-{
-void *content;
-struct s_list *next;
-}               t_list;
+// typedef struct  s_list
+// {
+// void *content;
+// struct s_list *next;
+// }               t_list;
 
-t_list *ft_lstnew(void *content);
-int ft_lstsize(t_list *lst);
-void ft_lstadd_front(t_list **lst, t_list *new);
+// t_list *ft_lstnew(void *content);
+// int ft_lstsize(t_list *lst);
+// void ft_lstadd_front(t_list **lst, t_list *new);
 
 void thru_list(t_list *begin)
 {

@@ -40,7 +40,7 @@ int main (void)
     ft_lstadd_front(&ptr0, obj0);
     ft_lstadd_front(&ptr0, ft_lstnew("strang"));
     thru_list(ptr0);
-    printf("%d\n", ft_lstsize(ptr0));
+    printf("\n%s\n", (ft_lstlast(ptr0)) -> content);
     free (obj0);
     return (0);
 }

@@ -10,6 +10,7 @@ SRCS	=	ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c \
 			ft_putendl_fd.c ft_putnbr_fd.c \
 			
 SRCS_B	=	ft_lstadd_front.c ft_lstnew.c ft_lstsize.c \
+			ft_lstlast.c \
 
 OBJS	=	$(SRCS:.c=.o)
 OBJS_B	=	$(SRCS_B:.c=.o)

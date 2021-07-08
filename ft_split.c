@@ -56,30 +56,31 @@ static char	**clean_mem(char **ptr)
 
 static char	**all_mem(char const *s, char c, char **ptr, int word_c)
 {
-	int		i[2];
+	int count;
+	int flag;
 
-	i[0] = 0;
-	i[1] = 0;
+	count = 0;
+	flag = 0;
 	ptr = (char **)malloc((word_c + 1) * sizeof(char *));
 	if (ptr == NULL)
 		return (NULL);
-	while (i[0] < word_c)
+	while (count < word_c)
 	{
-		if (*s != c && i[1] == 0)
+		if (*s != c && flag == 0)
 		{
-			ptr[i[0]] = malloc(word_len(s, c) + 1);
-			if (ptr[i[0]] == NULL)
+			ptr[count] = malloc(word_len(s, c) + 1);
+			if (ptr[count] == NULL)
 				return (clean_mem(ptr));
-			ft_memcpy(ptr[i[0]], s, word_len(s, c));
-			ptr[i[0]][word_len(s, c)] = '\0';
-			i[0]++;
-			i[1]++;
+			ft_memcpy(ptr[count], s, word_len(s, c));
+			ptr[count][word_len(s, c)] = '\0';
+			count++;
+			flag++;
 		}
 		if (*s == c)
-			i[1] = 0;
+			flag = 0;
 		s++;
 	}
-	ptr[i[0]] = NULL;
+	ptr[count] = NULL;
 	return (ptr);
 }
 

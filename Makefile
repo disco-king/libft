@@ -27,8 +27,8 @@ ifndef COMPILE_BONUS
 ${NAME} : ${OBJS}
 	${AR} ${NAME} ${OBJS}
 else
-${NAME} : ${OBJS_B}
-	${AR} ${NAME} ${OBJS_B}
+${NAME} : ${OBJS} ${OBJS_B}
+	${AR} ${NAME} ${OBJS} ${OBJS_B}
 endif
 
 %.o : %.c

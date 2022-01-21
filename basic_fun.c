@@ -6,7 +6,16 @@
 
 int main (void)
 {
-	char *i = "1234";
-	printf("%d\n", ft_atoi(i));
+	char *line1 = ft_strdup("first line");
+	char *line2 = ft_strdup("second line");
+	t_list *start = ft_lstnew(line2);
+	ft_lstadd_front(&start, ft_lstnew(line1));
+	t_list *lst = start;
+	printf("printing list of size %d\n", ft_lstsize(lst));
+	while(lst)
+	{
+		printf("lst content <%s>\n", (char *)lst->content);
+		lst = lst->next;
+	}
 	return (0);
 }

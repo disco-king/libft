@@ -1,100 +1,85 @@
 #include "libft.h"
 
-static int	word_count(char const *str, char spl)
+int word_count(char *str, char sep)
 {
-	int	count;
-	int	i;
-	int	len;
+	int count = 0;
+	int flag = 0;
 
-	count = 0;
-	len = 0;
-	i = 0;
-	while (str[i])
+	while(*str)
 	{
-		if (str[i] != spl)
-			len++;
-		if (str[i] == spl && len != 0)
+		if(*str != sep && flag == 0)
 		{
-			len = 0;
-			count++;
-		}
-		i++;
-	}
-	if (len != 0)
-		count++;
-	return (count);
-}
-
-static int	word_len(char const *str, char c)
-{
-	int	count;
-
-	count = 0;
-	while (*str != '\0' && *str != c)
-	{
-		count++;
-		str++;
-	}
-	return (count);
-}
-
-static char	**clean_mem(char **ptr)
-{
-	char	**buff;
-
-	buff = ptr;
-	while (*ptr)
-	{
-		free (*ptr);
-		*ptr = NULL;
-		ptr++;
-	}
-	free (buff);
-	buff = NULL;
-	return (buff);
-}
-
-static char	**all_mem(char const *s, char c, char **ptr, int word_c)
-{
-	int count;
-	int flag;
-
-	count = 0;
-	flag = 0;
-	ptr = (char **)malloc((word_c + 1) * sizeof(char *));
-	if (ptr == NULL)
-		return (NULL);
-	while (count < word_c)
-	{
-		if (*s != c && flag == 0)
-		{
-			ptr[count] = malloc(word_len(s, c) + 1);
-			if (ptr[count] == NULL)
-				return (clean_mem(ptr));
-			ft_memcpy(ptr[count], s, word_len(s, c));
-			ptr[count][word_len(s, c)] = '\0';
 			count++;
 			flag++;
 		}
-		if (*s == c)
+		if(*str == sep)
 			flag = 0;
-		s++;
+		str++;
 	}
-	ptr[count] = NULL;
-	return (ptr);
+	return(count);
 }
 
-char	**ft_split(char const *s, char c)
+char	*getstr(char *s, char sep)
 {
-	char	**ptr;
-	int		word_c;
+	char	*str;
+	int	lim = 0;
+	int i = 0;
 
-	if (s == NULL)
-		return (NULL);
-	ptr = NULL;
-	word_c = word_count(s, c);
-	ptr = all_mem(s, c, ptr, word_c);
-	if (ptr == NULL)
-		return (NULL);
-	return (ptr);
+	while (s[lim] && s[lim] != sep)
+		lim++;
+	str = (char *) malloc(lim + 1);
+	if (str)
+	{
+		while (lim--)
+		{
+			str[i] = s[i];
+			i++;
+		}
+		str[i] = '\0';
+	}
+	return (str);
 }
+
+char **free_all(char **ret)
+{
+	char **buff  = ret;
+
+	while (*ret)
+	{
+		free(*ret);
+		*ret = NULL;
+		ret++;
+	}
+	free(buff);
+	buff = NULL;
+	return(buff);
+}
+
+char **ft_split(const char *s, char c)
+{
+	char *str = (char *)s;
+	int count = word_count(str, c);
+	char **ret;
+	char *buff;
+
+	if(count)
+		ret = (char **)malloc((count + 1) * sizeof(char *));
+	else
+		return(NULL);
+	ret[count] = NULL;
+	count = 0;
+	while(ret[count] != NULL)
+	{
+		while (*str == c)
+			str++;
+		buff = getstr(str, c);
+		if (!buff)
+			return (free_all(ret));
+		ret[count] = buff;
+		while(*str != c && *str)
+			str++;
+		count++;
+	}
+	return (ret);
+}
+
